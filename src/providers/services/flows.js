@@ -65,7 +65,19 @@ export const flows = createApi({
           };
         },
         invalidatesTags: [{ type: "mindmap", id: "LIST" }],
-    }),
+      }),
+    deleteSelectedMindMap: builder.mutation({
+        query: (id) => {
+          return {
+            url: `/mindmap`,
+            method: "DELETE",
+            body: {
+              id
+            }
+          };
+        },
+        invalidatesTags: [{ type: "mindmap", id: "LIST" }],
+      }),
     getMindMapDetails: builder.query({
       query: (mindMapId) => `/mindmap?mindMapId=${mindMapId}`,
       providesTags: (result, error) => {

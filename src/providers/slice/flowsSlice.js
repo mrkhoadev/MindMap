@@ -43,8 +43,19 @@ const flowsSlice = createSlice({
       state.isLoading = false;
     },
     deleteSelectedMindMap: (state, action) => {
-      state.mindMapList = [...action.payload];
-      state.isLoading = false
+      const newMindMapList = state.mindMapList.map(
+        (item) => {
+          if (item.selected)
+          {
+            return null;
+          }
+          return item
+        }
+      ).filter((i) => i);
+      state.mindMapList = newMindMapList;
+      state.isLoading = false;
+      state.checkAll = false;
+      state.isSelected = false;
     },
     changeSelectedGroup: (state, action) => {
       state.mindMapList = state.mindMapList.map((flow) => {

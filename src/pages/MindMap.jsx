@@ -28,8 +28,8 @@ export default function MindMap({ session = '' }) {
   const [getUserQuery, resultGetUserEmail] = flows.useLazyGetUserEmailQuery();
   const [createUser, resultCreateUser] = flows.useCreateUserDataMutation();
   const [getMindMapQuery, resultGetMindMap] = flows.useLazyGetMindMapQuery();
-  const [getMindMapToDelete, resultGetMindMapToDelete] = flows.useLazyGetMindMapQuery();
   const [deleteMindMapQuery, resultDeleted] = flows.useDeleteMindMapMutation();
+  const [deleteSelectedMutation, resultDeleteSelected] = flows.useDeleteSelectedMindMapMutation();
 
   const { 
           isError: isErrorGetUserEmail, 
@@ -55,7 +55,11 @@ export default function MindMap({ session = '' }) {
           isLoading: isLoadingDelete,
           isSuccess: isSuccessDelete,
           originalArgs: deletedId
-        } = resultDeleted
+        } = resultDeleted;
+    
+  const {
+          isSuccess: isSuccessDeleteSelected
+        } = resultDeleteSelected
 
   const dispatch = useDispatch();
   const mindMapList = useSelector((state) => state.flowsSlice.mindMapList);
@@ -178,6 +182,19 @@ export default function MindMap({ session = '' }) {
       setStatusCheckbox
     ]
   )
+
+  useEffect(
+    () => {
+      if (isSuccessDeleteSelected) 
+      {
+        dispatch(
+          deleteSelectedMutation()
+        )
+      }
+    }, [
+          isSuccessDeleteSelected
+      ]
+  )
   if ( isLoading ) 
     {
     return <Loading />;
@@ -254,8 +271,8 @@ export default function MindMap({ session = '' }) {
               <tfoot>
                 <tr>
                   <td>
-                    <DeleteSelectedBtn getMindMapToDelete={getMindMapToDelete} 
-                                       resultGetMindMapToDelete={resultGetMindMapToDelete} />
+                    <DeleteSelectedBtn deleteSelectedMutation={deleteSelectedMutation}
+                                       resultDeleteSelected={resultDeleteSelected} />
                   </td>
                 </tr>
               </tfoot>
