@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "rm -rf .next && next dev",
-    "build": "next build",
+    "dev": "rm -rf .next && set PORT=8888 && next dev",
+    "build": "rm -rf .next && next build",
     "start": "next start",
     "lint": "next lint"
   },
@@ -12,8 +12,9 @@
     "@nextui-org/react": "^2.2.9",
     "@reduxjs/toolkit": "^2.0.1",
     "clsx": "^2.0.0",
+    "cors": "^2.8.5",
     "nanoid": "^5.0.4",
-    "next": "14.0.4",
+    "next": "^14.0.4",
     "next-auth": "^4.24.5",
     "react": "^18",
     "react-dom": "^18",

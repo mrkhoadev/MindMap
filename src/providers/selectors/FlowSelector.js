@@ -6,6 +6,7 @@ const FlowSelector = (state) => ({
   addChildNode: state.addChildNode,
   onNodeDragStop: state.onNodeDragStop,
   onConnect: state.onConnect,
+  setDataFlow: state.setDataFlow,
 });
 
 export default FlowSelector;

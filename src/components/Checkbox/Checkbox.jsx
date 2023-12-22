@@ -1,8 +1,14 @@
 "use client";
-import React, { useId } from "react";
+import React from "react";
 import "./Checkbox.scss";
-export default function Checkbox() {
-  const id = useId();
+import { useDispatch, useSelector } from "react-redux";
+import { changeSelectedGroup } from "@/providers/slice/flowsSlice";
+export default function Checkbox({ selected = false, id = 'all' }) {
+  const dispatch = useDispatch();
+  const checkAll = useSelector((state) => state.flowsSlice.checkAll)
+  const handleOnChange = () => {
+    dispatch(changeSelectedGroup({ id, selected: !selected }))
+  }
   return (
     <div className="container flex justify-center items-center">
       <input
@@ -10,6 +16,8 @@ export default function Checkbox() {
         id={"cbx-" + id}
         className="cbx"
         type="checkbox"
+        onChange={handleOnChange}
+        checked={id === "all" ? checkAll : selected}
       />
       <label className="check" htmlFor={"cbx-" + id}>
         <svg viewBox="0 0 18 18" height="18px" width="18px">

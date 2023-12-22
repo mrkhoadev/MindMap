@@ -4,15 +4,11 @@ import { createWithEqualityFn } from "zustand/traditional";
 import { nanoid } from "nanoid/non-secure";
 
 const useFlowStore = createWithEqualityFn((set, get) => ({
-  nodes: [
-    {
-      id: "root",
-      type: "title",
-      data: { label: "My Mindmap" },
-      position: { x: 0, y: 0 },
-    },
-  ],
+  nodes: [],
   edges: [],
+  setDataFlow: ({ nodes, edges }) => {
+    set({ nodes, edges });
+  },
   onNodesChange: (changes) => {
     const newChanges = changes
       .map((item) => {

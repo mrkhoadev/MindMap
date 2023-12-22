@@ -43,7 +43,7 @@ export default function LoginForm() {
         await signIn("credentials", {
           name: result?.data?.data?.name,
           email: result?.data?.data?.email,
-          redirect: false,
+          redirect: true,
         });
       })();
     }

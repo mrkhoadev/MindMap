@@ -52,7 +52,7 @@ export default function RegisterForm() {
         await signIn("credentials", {
           name: userInfo.name,
           email: userInfo.email,
-          redirect: false,
+          redirect: true,
         });
       })();
     }

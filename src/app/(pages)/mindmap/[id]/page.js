@@ -1,12 +1,12 @@
-import MindMap from "@/pages/MindMap";
+import CreateMindMap from "@/pages/CreateMindMap";
 import { getServerSession } from "next-auth";
 import React from "react";
 
-export default async function MindMapRoute() {
+export default async function CreateMindMapRoute() {
   const session = await getServerSession()
   return (
     <main>
-      <MindMap session={session} />
+      <CreateMindMap session={session} />
     </main>
   );
 }
