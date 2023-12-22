@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import AddBtn from "@/components/Pages/Mindmap/AddBtn";
 import EditBtn from "@/components/Pages/Mindmap/EditBtn";
 import { extractDateTime } from "@/helpers/ExtractDateTime";
-import { deleteMindMap, setMindMapList, setStatusCheckbox } from "@/providers/slice/flowsSlice";
+import { deleteMindMap, deleteSelectedMindMap, setMindMapList, setStatusCheckbox } from "@/providers/slice/flowsSlice";
 import DeleteBtn from "@/components/Pages/Mindmap/DeleteBtn";
 import DeleteSelectedBtn from "@/components/Pages/Mindmap/DeleteSelectedBtn";
 
@@ -188,10 +188,12 @@ export default function MindMap({ session = '' }) {
       if (isSuccessDeleteSelected) 
       {
         dispatch(
-          deleteSelectedMutation()
+          deleteSelectedMindMap()
         )
       }
     }, [
+          dispatch,
+          deleteSelectedMindMap,
           isSuccessDeleteSelected
       ]
   )

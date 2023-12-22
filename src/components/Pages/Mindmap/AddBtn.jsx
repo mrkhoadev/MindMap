@@ -11,7 +11,7 @@ import { setIsLoading } from '@/providers/slice/flowsSlice';
 export default function AddBtn() {
   const newId = nanoid();
   const route = useRouter();
-  const { data: { email }} = useSession();
+  const session = useSession();
   const [postMindMap] = flows.usePostMindMapMutation();
   const dispatch = useDispatch()
 
@@ -30,7 +30,7 @@ export default function AddBtn() {
         }],
         edges: []
       },
-      userEmail: email,
+      userEmail: session?.data?.email,
       create_at: ISOextractDateTime(time),
     }
     postMindMap(newMindMap);
