@@ -1,5 +1,5 @@
 "use client"
-import { setFlowDetails } from '@/providers/slice/flowsSlice';
+import { setIsLoading } from '@/providers/slice/flowsSlice';
 import React from 'react'
 import { FaSave } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
@@ -22,7 +22,7 @@ export default function SaveFlowBtn({name, description, editFlow}) {
             }
         }
         editFlow(newFlow);
-        dispatch(setFlowDetails(newFlow));
+        dispatch(setIsLoading(true));
     }
     return (
         <div className='h-[40px] flex items-center'>

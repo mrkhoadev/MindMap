@@ -227,7 +227,7 @@ export default function MindMap({ session = '' }) {
                 mindMapList.length >= 1 ? 
                 (mindMapList?.map((element) => {
                   if (element) {
-                    const {id, name, description, create_at, selected} = element;
+                    const {id, name, description, create_at, selected, mindMapId} = element;
                     return (
                       <tr className={`${tableClass.row} border-b border-[#aaa]`}
                           key={id}>
@@ -250,7 +250,7 @@ export default function MindMap({ session = '' }) {
                         </td>
                         <td className={`${tableClass.col4}`}>
                           <div className="flex gap-x-5 justify-center text-2xl text-200">
-                            <EditBtn id={id} />
+                            <EditBtn id={mindMapId} />
                             <DeleteBtn id={id} deleteMindMapQuery={deleteMindMapQuery} />
                           </div>
                         </td>

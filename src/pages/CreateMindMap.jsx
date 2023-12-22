@@ -22,6 +22,7 @@ export default function CreateMindMap({ session }) {
 
   const [getMindMapDetails, resultMindMapDetails] = flows.useLazyGetMindMapDetailsQuery();
   const [editFlow, resultEditFlow] = flows.useEditFlowDataMutation();
+  const { isSuccess: isSuccessEditFlow } = resultEditFlow;
   
   useEffect(
     () => {
@@ -36,7 +37,7 @@ export default function CreateMindMap({ session }) {
   useEffect(
     () => {
       if (resultMindMapDetails.isSuccess) {
-        const getFlowDetails = resultMindMapDetails?.data[0];
+        const getFlowDetails = resultMindMapDetails?.data && resultMindMapDetails?.data[0];
         if (getFlowDetails) {
           dispatch(setFlowDetails(getFlowDetails));
         } else {
@@ -48,7 +49,7 @@ export default function CreateMindMap({ session }) {
         resultMindMapDetails
       ]
   );
-
+  
   useEffect(
     () => {
       if (newFlowData && asyncRef.current) {
@@ -60,6 +61,19 @@ export default function CreateMindMap({ session }) {
         newFlowData, 
       ]
   );
+
+  useEffect(
+    () => {
+      if (isSuccessEditFlow)
+      {
+        const mindMapId = pathname.split("/")[2] || '';
+        getMindMapDetails(mindMapId);
+      }
+    },[
+        pathname,
+        isSuccessEditFlow,
+      ]
+  )
  
   if (isLoading) 
   {
@@ -69,7 +83,7 @@ export default function CreateMindMap({ session }) {
   return (
     <div className="max-w-6xl mx-auto py-10 flex flex-col gap-y-5 min-h-[100vh]">
       <ReactFlowProvider>
-        <FlowTitle data={resultMindMapDetails?.data[0] || {}} editFlow={editFlow} />
+        <FlowTitle data={resultMindMapDetails?.data && resultMindMapDetails?.data[0] || {}} editFlow={editFlow} />
         <Flow map={flowDetails?.map || []} />
       </ReactFlowProvider>
     </div>
