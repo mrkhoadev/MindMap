@@ -1,6 +1,5 @@
 import CreateMindMap from "@/components/Pages/CreateMindMap/CreateMindMap";
 import { getServerSession } from "next-auth";
-import { revalidatePath } from "next/cache";
 import React from "react";
 
 const getMindMapDetails = async (id) => {
@@ -10,12 +9,18 @@ const getMindMapDetails = async (id) => {
         tags: "mindmapDetails",
       },
     });
-    revalidatePath(`/mindmap/${id}`)
-    const data = await response.json();
-    const details = [...data]
+    if (response.ok)
+    {
+      const data = await response.json();
+      const details = [...data]
+      return {
+        status: response.status,
+        mindMapDetails: details[0] || null
+      }
+    }
     return {
       status: response.status,
-      mindMapDetails: details[0] || null
+      mindMapDetails: null
     }
   } catch(e) {
     return { status: 500 }
