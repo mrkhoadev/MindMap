@@ -1,9 +1,9 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
-import EditBtn from "./EditBtn";
+import EditBtn from "@/components/Pages/CreateMindMap/EditBtn";
 import { useSelector } from "react-redux";
-import ShareBtn from "./shareBtn";
-import ShareForm from "./ShareForm";
+import ShareBtn from "@/components/Pages/CreateMindMap/shareBtn";
+import ShareForm from "@/components/Pages/CreateMindMap/ShareForm";
 import { htmlScript } from "@/helpers/regex";
 import handleCheckAccount from "@/helpers/checkAccount";
 
