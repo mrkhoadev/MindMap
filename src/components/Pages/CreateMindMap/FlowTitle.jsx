@@ -1,12 +1,12 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
-import EditBtn from "@/components/Pages/CreateMindMap/EditBtn";
+import EditBtn from "./EditBtn";
 import { useSelector } from "react-redux";
-import ShareBtn from "@/components/Pages/CreateMindMap/shareBtn";
+import ShareBtn from "./ShareBtn";
 import ShareForm from "@/components/Pages/CreateMindMap/ShareForm";
 import { htmlScript } from "@/helpers/regex";
 import handleCheckAccount from "@/helpers/checkAccount";
-
+// test
 export default function FlowTitle({ editFlow, email }) {
   const flowDetails = useSelector((state) => state.flowsSlice.flowDetails);
   const nameRef = useRef(null);
