@@ -1,6 +1,6 @@
 import { getProviders } from "next-auth/react";
 import Link from "next/link";
-import SingInBtn from "./components/SingInBtn";
+import SingInBtn from "../../components/Auth/SingInBtn";
 
 export default async function AuthLayout({ children }) {
   const providers = await getProviders();

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import React from "react";
-import RegisterForm from "../components/RegisterForm";
+import RegisterForm from "../../../components/Auth/RegisterForm";
 
 export default function RegisterRoute() {
   return (
