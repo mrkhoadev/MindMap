@@ -1,17 +1,20 @@
 "use client";
 import { MdDeleteForever } from "react-icons/md";
 import React from 'react';
-import { useDispatch } from "react-redux";
 import { setIsLoading } from "@/providers/slice/flowsSlice";
+import { useDispatch } from "react-redux";
 
-export default function DeleteBtn({ id, deleteMindMapQuery }) {
-  const dispatch = useDispatch();
+export default function DeleteBtn({ id, deleteMutation }) {
+
+  const dispatch = useDispatch()
+
   const handleDelete = () => {
-    deleteMindMapQuery(id);
     dispatch(
       setIsLoading(true)
     )
+    deleteMutation(id);
   }
+
   return (
     <button onClick={handleDelete}><MdDeleteForever /></button>
   )

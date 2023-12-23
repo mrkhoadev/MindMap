@@ -3,7 +3,7 @@ import React from 'react';
 import { useRouter } from 'next/navigation';
 import { ISOextractDateTime } from '@/helpers/ExtractDateTime';
 import { useSession } from 'next-auth/react';
-import { flows } from '@/providers/services/flows';
+import { flows } from '@/providers/services/flowsQuery';
 import { nanoid } from 'nanoid/non-secure';
 import { useDispatch } from 'react-redux';
 import { setIsLoading } from '@/providers/slice/flowsSlice';
@@ -30,6 +30,7 @@ export default function AddBtn() {
         }],
         edges: []
       },
+      isAccessible: false,
       userEmail: session?.data?.email,
       create_at: ISOextractDateTime(time),
     }
@@ -39,7 +40,7 @@ export default function AddBtn() {
     )
     setTimeout(() => {
       route.push(`/mindmap/${newId}`)
-    }, 1000)
+    }, 100)
   }
   return (
     <div className='h-[60px] flex justify-start items-center'>

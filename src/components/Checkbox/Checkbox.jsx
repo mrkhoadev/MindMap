@@ -9,6 +9,8 @@ export default function Checkbox({ selected = false, id = 'all' }) {
   const handleOnChange = () => {
     dispatch(changeSelectedGroup({ id, selected: !selected }))
   }
+
+ 
   return (
     <div className="container flex justify-center items-center">
       <input

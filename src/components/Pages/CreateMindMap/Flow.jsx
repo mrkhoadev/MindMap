@@ -1,6 +1,5 @@
 "use client";
 import ReactFlow, {
-  Controls,
   Background,
   BackgroundVariant,
   MiniMap,
@@ -17,8 +16,7 @@ import useFlowStore from "@/providers/useFlowStore";
 import { shallow } from "zustand/shallow";
 import nodeColor from "@/helpers/MiniMap";
 import FlowSelector from "@/providers/selectors/FlowSelector";
-import { MdOpenInFull } from "react-icons/md";
-import { MdOutlineCloseFullscreen } from "react-icons/md";
+import CustomControls from "./CustomControls";
 
 const nodeTypes = { branch: CustomNode, title: CustomNode };
 const edgeTypes = {
@@ -29,7 +27,7 @@ const connectionLineStyle = {
   stroke: "#4f46e5",
   strokeWidth: 3,
 };
-function Flow({ map }) {
+function Flow({ map, email }) {
   const {
     nodes,
     edges,
@@ -42,8 +40,9 @@ function Flow({ map }) {
   } = useFlowStore(FlowSelector, shallow);
   
   const connectingNodeId = useRef(null);
-  const [screen, setScreen] = useState(false);
+  const [isScreen, setIsScreen] = useState(false);
   const { screenToFlowPosition } = useReactFlow();
+  const store = useStoreApi();
 
   const getChildNodePosition = (event, parentNode) => {
     const { domNode } = store.getState();
@@ -70,7 +69,6 @@ function Flow({ map }) {
     connectingNodeId.current = nodeId;
   }, []);
 
-  const store = useStoreApi();
   const onConnectEnd = useCallback(
     (event) => {
       const { nodeInternals } = store.getState();
@@ -99,7 +97,7 @@ function Flow({ map }) {
     }
   }, [map])
   return (
-    <div className={`border-[3px] border-100 bg-100 transition-all ${screen ? "fixed inset-0" : "h-[600px] w-full mx-auto" }`}>
+    <div className={`border-[3px] border-100 bg-100 transition-all ${isScreen ? "fixed inset-0" : "h-[600px] w-full mx-auto" }`}>
       <ReactFlow
         nodes={nodes}
         nodeTypes={nodeTypes}
@@ -116,6 +114,7 @@ function Flow({ map }) {
         onConnect={onConnect} // kết nối
         fitView
         deleteKeyCode={["Delete", "Backspace"]}
+        
       >
         <Background
           gap={10}
@@ -123,11 +122,11 @@ function Flow({ map }) {
           variant={BackgroundVariant.Lines}
         />
         <MiniMap nodeStrokeWidth={3} pannable zoomable nodeColor={nodeColor} />
-        <Controls>
-          <ControlButton onClick={() => setScreen(!screen)}>
-            {screen ? <MdOutlineCloseFullscreen /> : <MdOpenInFull />}
-          </ControlButton>
-        </Controls>
+        <CustomControls 
+          onScreenActiveChange={setIsScreen}
+          isScreen={isScreen}
+          email={email}
+        />
       </ReactFlow>
     </div>
   );

@@ -1,12 +1,37 @@
-import CreateMindMap from "@/pages/CreateMindMap";
+import CreateMindMap from "@/components/Pages/CreateMindMap/CreateMindMap";
 import { getServerSession } from "next-auth";
+import { revalidatePath } from "next/cache";
 import React from "react";
 
-export default async function CreateMindMapRoute() {
-  const session = await getServerSession()
+const getMindMapDetails = async (id) => {
+  try {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_MY_SERVER_API}/mindMap?mindMapId=${id}`, {
+      next: {
+        tags: "mindmapDetails",
+      },
+    });
+    revalidatePath(`/mindmap/${id}`)
+    const data = await response.json();
+    const details = [...data]
+    return {
+      status: response.status,
+      mindMapDetails: details[0] || null
+    }
+  } catch(e) {
+    return { status: 500 }
+  }
+  
+};
+export const dynamic = "force-dynamic";
+
+export default async function CreateMindMapRoute({ params: { id } }) {
+  const session = await getServerSession();
+  const email = session?.user?.email;
+  const data = await getMindMapDetails(id);
+  
   return (
     <main>
-      <CreateMindMap session={session} />
+      <CreateMindMap email={email} data={data} />
     </main>
   );
 }

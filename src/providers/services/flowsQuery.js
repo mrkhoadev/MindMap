@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { revalidatePath } from "next/cache";
 
 export const flows = createApi({
   reducerPath: "flows",
@@ -8,33 +9,8 @@ export const flows = createApi({
   }),
   tagTypes: ["mindmap"],
   endpoints: (builder) => ({
-    getUserEmail: builder.query({
-        query: (email) => `/users?userEmail=${email}`,
-        providesTags: (result, error) => {
-            if (result) {
-              const data = [
-                ...result.map(({ id }) => ({ type: "mindmap", id })), 
-                { type: "mindmap", id: "LIST" },
-              ];
-              return data;
-            }
-            return [{...error, type: 'mindmap'}]
-        },
-      }),
-    createUserData: builder.mutation({
-        query: (email) => {
-          return {
-            url: `/users`,
-            method: "POST",
-            body: {
-                userEmail: email
-            },
-          };
-        },
-        invalidatesTags: [{ type: "mindmap", id: "LIST" }],
-      }),
     getMindMap: builder.query({
-        query: () => `/mindmap`,
+        query: (email) => `/mindmap?userEmail=${email}`,
         providesTags: (result, error) => {
             if (result)
             {
@@ -92,9 +68,7 @@ export const flows = createApi({
           return [{...error, type: 'mindmap'}]
       },
     }),
-
-
-      editFlowData: builder.mutation({
+    editFlowData: builder.mutation({
         query: (data) => {
           return {
             url: `/mindmap/${data.id}`,

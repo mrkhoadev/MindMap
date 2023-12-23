@@ -1,11 +1,8 @@
-"use client";
 import Image from "next/image";
-// import { getServerSession } from "next-auth";
 import Header from "@/components/Layout/Header";
 import Footer from "@/components/Layout/Footer";
 
 export default function Home({ session }) {
-  // const session = await getServerSession();
   return (
     <>
       <Header session={session} />

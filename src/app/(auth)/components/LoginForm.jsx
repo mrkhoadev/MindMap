@@ -4,7 +4,7 @@ import Link from "next/link";
 import { BiHide } from "react-icons/bi";
 import { BiShow } from "react-icons/bi";
 import { signIn } from "next-auth/react";
-import { auth } from "@/providers/services/auth";
+import { auth } from "@/providers/services/authQuery";
 
 const formCSS = {
   form: "w-full text-lg flex flex-col gap-y-2",

@@ -1,8 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { auth } from "./services/auth";
+import { auth } from "./services/authQuery";
 import { setupListeners } from "@reduxjs/toolkit/query";
 import authSlice from "./slice/authSlice";
-import { flows } from "./services/flows";
+import { flows } from "./services/flowsQuery";
 import flowsSlice from "./slice/flowsSlice";
 
 export const store = configureStore({

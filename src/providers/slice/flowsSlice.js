@@ -15,17 +15,7 @@ const flowsSlice = createSlice({
       state.isLoading = action.payload;
     },
     setMindMapList: (state, action) => {
-      const userEmail = action.payload.userEmail;
-      const newMindMapList = action.payload.mindMapData?.map(
-        (flow) => {
-          if (flow.userEmail === userEmail) 
-          {
-            return flow
-          }
-          return null;
-        }
-      )?.filter((i) => i);
-      state.mindMapList = newMindMapList;
+      state.mindMapList = action.payload;
       state.isLoading = false;
     },
     deleteMindMap: (state, action) => {

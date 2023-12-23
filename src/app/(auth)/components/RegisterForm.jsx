@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { BiHide } from "react-icons/bi";
 import { BiShow } from "react-icons/bi";
-import { auth } from "@/providers/services/auth";
+import { auth } from "@/providers/services/authQuery";
 import { signIn } from "next-auth/react";
 
 const formCSS = {
