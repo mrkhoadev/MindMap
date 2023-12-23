@@ -31,7 +31,6 @@ export default function CreateMindMap({ email, data: { status, mindMapDetails } 
       }
     },[
         dispatch,
-        setFlowDetails,
         mindMapDetails
       ]
   );
@@ -55,7 +54,6 @@ export default function CreateMindMap({ email, data: { status, mindMapDetails } 
         argsEdit,
         dataEdit,
         isErrorEdit,
-        setFlowDetails,
         isSuccessEditFlow,
       ]
   )
@@ -74,7 +72,7 @@ export default function CreateMindMap({ email, data: { status, mindMapDetails } 
   {
     return <div className="w-[700px] mx-auto relative">
       <h1 className="text-5xl absolute bottom-10 translate-x-[-50%] left-[50%] w-[520px]">MindMap không tồn tại!</h1>
-      <Image src={errorImg} width={0} height={0} priority className="w-full h-auto" />
+      <Image src={errorImg} width={0} height={0} priority alt="error" className="w-full h-auto" />
     </div>
   }
   if (isLoading) 

@@ -29,7 +29,7 @@ function CustomNode({ data, isConnectable, type, id, selected, ...props }) {
     if (isClick && inputRef.current) {
       inputRef.current.focus();
     }
-  }, [isClick]);
+  }, [isClick, id , data.label, updateNodeLabel]);
   useEffect(() => {
     inputRef.current.textContent = data?.label || "";
     textRef.current = data?.label;

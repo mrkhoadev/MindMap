@@ -62,7 +62,9 @@ export default function MindMap({ session = '', data: { status, mindMapData } })
         )
       }
     },[
-        isSuccessDelete
+        isSuccessDelete,
+        argsDelete,
+        dispatch
       ]
   )
 
@@ -72,7 +74,8 @@ export default function MindMap({ session = '', data: { status, mindMapData } })
         console.log(resultDeleteSelected);
       }
     },[
-        isSuccessDeleteSelected
+        isSuccessDeleteSelected,
+        resultDeleteSelected
       ]
   )
 
@@ -87,7 +90,7 @@ export default function MindMap({ session = '', data: { status, mindMapData } })
           }
         )
       )
-    },[]
+    },[dispatch]
   )
 
   if (status > 400) 

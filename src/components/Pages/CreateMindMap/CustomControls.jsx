@@ -62,7 +62,7 @@ const CustomControls = ({
         elementsSelectable: false,
       });
     }
-  }, [email]);
+  }, [email, isAccountValid, store]);
 
   if (!isVisible) {
     return null;

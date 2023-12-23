@@ -85,7 +85,7 @@ function Flow({ map, email }) {
         }
       }
     },
-    [getChildNodePosition]
+    [getChildNodePosition, addChildNode, store]
   );
 
   useEffect(() => {
@@ -95,7 +95,7 @@ function Flow({ map, email }) {
         edges: map?.edges,
       })
     }
-  }, [map])
+  }, [map, setDataFlow])
   return (
     <div className={`border-[3px] border-100 bg-100 transition-all ${isScreen ? "fixed inset-0" : "h-[600px] w-full mx-auto" }`}>
       <ReactFlow
