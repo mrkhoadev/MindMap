@@ -92,6 +92,9 @@ export default function MindMap({ session = '', data: { status, mindMapData } })
   useEffect(
     () => {
       if (isSuccessPost && argsPost?.mindMapId) {
+        (async ()=> {
+          await handleRevaliDate()
+        })()
         route.push(`./mindmap/${argsPost?.mindMapId}`)
       }
     },[
