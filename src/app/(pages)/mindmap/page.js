@@ -1,25 +1,9 @@
 import MindMap from "@/components/Pages/Mindmap/MindMap";
 import { getServerSession } from "next-auth";
 import React from "react";
+import getMindMap from "./action";
 
-const getMindMap = async (email) => {
-  try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_MY_SERVER_API}/mindmap?userEmail=${email}`, {
-      next: {
-        tags: "mindmap",
-      },
-    });
-    if (response.ok) {
-      const data = await response.json();
-      return {
-        status: response.status,
-        mindMapData: data || []
-      }
-    }
-  } catch(e){
-    return { status: 500 }
-  }
-};
+
 export const dynamic = "force-dynamic";
 
 export default async function MindMapRoute() {

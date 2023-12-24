@@ -13,7 +13,6 @@ import { AiOutlineFullscreen } from "react-icons/ai";
 import { AiOutlineFullscreenExit } from "react-icons/ai";
 import handleCheckAccount from '@/helpers/checkAccount';
 import { useSelector } from 'react-redux';
-import { useSession } from 'next-auth/react';
 
 const selector = (s) => ({
   isInteractive: s.nodesDraggable || s.nodesConnectable || s.elementsSelectable,

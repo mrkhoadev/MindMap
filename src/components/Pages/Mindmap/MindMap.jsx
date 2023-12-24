@@ -1,5 +1,5 @@
 "use client"
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { flows } from "@/providers/services/flowsQuery";
 import Loading from "@/components/Loading/Loading";
 import Checkbox from "@/components/Checkbox/Checkbox";
@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import AddBtn from "@/components/Pages/Mindmap/AddBtn";
 import EditBtn from "@/components/Pages/Mindmap/EditBtn";
 import { extractDateTime } from "@/helpers/ExtractDateTime";
-import { deleteMindMap, deleteSelectedMindMap, setIsLoading, setMindMapList, setStatusCheckbox } from "@/providers/slice/flowsSlice";
+import { setMindMapList } from "@/providers/slice/flowsSlice";
 import DeleteBtn from "@/components/Pages/Mindmap/DeleteBtn";
 import DeleteSelectedBtn from "@/components/Pages/Mindmap/DeleteSelectedBtn";
 import { useRouter } from "next/navigation";
@@ -29,12 +29,11 @@ export default function MindMap({ session = '', data: { status, mindMapData } })
   const isSelected = useSelector((state) => state.flowsSlice.isSelected);
   const mindMapList = useSelector((state) => state.flowsSlice.mindMapList);
   const isLoading = useSelector((state) => state.flowsSlice.isLoading);
-  const route = useRouter()
+  const route = useRouter();
 
   const [deleteMutation, resultDeleteMutation] = flows.useDeleteMindMapMutation();
   const [deleteSelectedMutation, resultDeleteSelected] = flows.useDeleteSelectedMindMapMutation();
   const [postMindMap, resultPostMindMap] = flows.usePostMindMapMutation();
-
 
   const {
           isSuccess: isSuccessDelete,
@@ -51,67 +50,52 @@ export default function MindMap({ session = '', data: { status, mindMapData } })
           originalArgs: argsPost
         } = resultPostMindMap
 
+  //Thêm data vào context khi lần đầu truy cập trang!
   useEffect(
     () => {
       dispatch(
         setMindMapList(mindMapData)
-      )
+      );
     },[
         dispatch,
         mindMapData
       ]
   )  
-
+  //Xử lý khi "Xóa" thành công!
   useEffect(
     () => {
       if (isSuccessDelete)
       {
         route.refresh()
-        dispatch(
-          deleteMindMap(argsDelete)
-        )
       }
     },[
-        isSuccessDelete,
+        route,
         argsDelete,
-        dispatch
+        isSuccessDelete,
       ]
   )
-
+  //Xử lý khi "xóa những mindmap đã chọn" thành công!
   useEffect(
     () => {
       if (isSuccessDeleteSelected) {
-        route.refresh();
-        dispatch(
-          deleteSelectedMindMap()
-        )
+        route.refresh()
       }
     },[
-        dispatch,
+        route,
         isSuccessDeleteSelected,
       ]
   )
-
+  //Xử lý khi thêm thành công!
   useEffect(
     () => {
       if (isSuccessPost && argsPost?.mindMapId) {
         route.push(`./mindmap/${argsPost?.mindMapId}`)
       }
-    },[isSuccessPost, argsPost]
-  )
-
-  //reset checkbox selected
-  useEffect(
-    () => {
-      dispatch(
-        setStatusCheckbox(
-          {
-            isSelected: false,
-            checkAll: false
-          }
-        )
-      )
-    },[dispatch]
+    },[
+        route,
+        argsPost, 
+        isSuccessPost, 
+      ]
   )
 
   if (status > 400) 
@@ -154,7 +138,8 @@ export default function MindMap({ session = '', data: { status, mindMapData } })
                     const {id, name, description, create_at, selected, mindMapId, isAccessible} = element;
                     return (
                       <tr className={`${tableClass.row} border-b border-[#aaa]`}
-                          key={id}>
+                          key={id}
+                      >
                         <td className={`${tableClass.col1}`}>
                           <Checkbox id={id}
                                     type='group' 
@@ -162,10 +147,10 @@ export default function MindMap({ session = '', data: { status, mindMapData } })
                           />
                         </td>
                         <td className={`${tableClass.col2}`}>
-                          <h3 className="text-xl">
+                          <h3 className="text-xl break-words max-w-[700px]">
                             {name}
                           </h3> 
-                          <p className=" text-200">
+                          <p className=" text-200 break-words max-w-[700px]">
                             {description}
                           </p>
                         </td>

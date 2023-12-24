@@ -1,5 +1,6 @@
 import CreateMindMap from "@/components/Pages/CreateMindMap/CreateMindMap";
 import { getServerSession } from "next-auth";
+import { revalidateTag } from "next/cache";
 import React from "react";
 
 const getMindMapDetails = async (id) => {
@@ -12,7 +13,8 @@ const getMindMapDetails = async (id) => {
     if (response.ok)
     {
       const data = await response.json();
-      const details = [...data]
+      const details = [...data];
+      revalidateTag(`mindmap`);
       return {
         status: response.status,
         mindMapDetails: details[0] || null
@@ -27,9 +29,9 @@ const getMindMapDetails = async (id) => {
   }
   
 };
-export const dynamic = "force-dynamic";
+// export const dynamic = "force-dynamic";
 
-export default async function CreateMindMapRoute({ params: { id } }) {
+export default async function CreateMindMapRoute({ params: { id }, ...props }) {
   const session = await getServerSession();
   const email = session?.user?.email;
   const data = await getMindMapDetails(id);

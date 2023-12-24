@@ -17,6 +17,8 @@ const flowsSlice = createSlice({
     setMindMapList: (state, action) => {
       state.mindMapList = action.payload;
       state.isLoading = false;
+      state.checkAll = false;
+      state.isSelected = false;
     },
     deleteMindMap: (state, action) => {
       const deletedId = action.payload;

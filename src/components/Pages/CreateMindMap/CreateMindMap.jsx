@@ -7,16 +7,15 @@ import Flow from "@/components/Pages/CreateMindMap/Flow";
 import React, { useEffect } from "react";
 import FlowTitle from "@/components/Pages/CreateMindMap/FlowTitle";
 import { setFlowDetails } from "@/providers/slice/flowsSlice";
-import { useRouter } from "next/navigation";
 import errorImg from '@/assets/images/error/error.png'
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 export default function CreateMindMap({ email, data: { status, mindMapDetails } }) {
   const dispatch = useDispatch();
   const flowDetails = useSelector((state) => state.flowsSlice.flowDetails);
   const isLoading = useSelector((state) => state.flowsSlice.isLoading);
   const route = useRouter()
-
   const [editFlow, resultEditFlow] = flows.useEditFlowDataMutation();
   const { 
           isError: isErrorEdit,
@@ -29,8 +28,11 @@ export default function CreateMindMap({ email, data: { status, mindMapDetails } 
     () => {
       if (mindMapDetails !== null) {
         dispatch(setFlowDetails(mindMapDetails));
+      } else {
+        route.refresh()
       }
     },[
+        route,
         dispatch,
         mindMapDetails
       ]
@@ -40,10 +42,7 @@ export default function CreateMindMap({ email, data: { status, mindMapDetails } 
     () => {
       if (isSuccessEditFlow) 
       {
-        // route.refresh()
-        dispatch(
-          setFlowDetails(dataEdit)
-        )
+        route.refresh();
       }
       if (isErrorEdit)
       {
@@ -57,6 +56,7 @@ export default function CreateMindMap({ email, data: { status, mindMapDetails } 
         dataEdit,
         isErrorEdit,
         isSuccessEditFlow,
+        route
       ]
   )
 
