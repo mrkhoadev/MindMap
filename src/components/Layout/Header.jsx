@@ -1,8 +1,11 @@
 "use client";
+import { handleRevaliDate } from "@/lib/revaliDate";
+import { setIsLoading } from "@/providers/slice/flowsSlice";
 import { signOut } from "next-auth/react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import React from "react";
+import { useDispatch } from "react-redux";
 
 const headerCSS = {
   header: "",
@@ -20,6 +23,8 @@ const inactiveClass = "text-200 hover:bg-accent-200";
 export default function Header({ session }) {
   const pathname = usePathname();
   const pageName = pathname.split("/")[1];
+  const dispatch = useDispatch();
+  const route = useRouter()
   return (
     <header className={`bg-white`}>
       <div
@@ -112,12 +117,20 @@ export default function Header({ session }) {
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    href={`/mindmap`}
+                  <button
+                    onClick={
+                      async () => {
+                        dispatch(
+                          setIsLoading(true)
+                        )
+                        await handleRevaliDate();
+                        route.push(`/mindmap`)
+                      }
+                    }
                     className={`${headerCSS.itemLink} text-primary-100 hover:bg-accent-300 border border-[transparent]`}
                   >
                     Mindmap
-                  </Link>
+                  </button>
                 </li>
                 <li>
                   <button
