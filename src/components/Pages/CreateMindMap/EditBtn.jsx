@@ -9,7 +9,7 @@ import { shallow } from "zustand/shallow";
 import handleCheckAccount from '@/helpers/checkAccount';
 
 export default function EditBtn({name, description, editFlow, email}) {
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
     const { nodes, edges } = useFlowStore(FlowSelector, shallow);
     const flowDetails = useSelector((state) => state.flowsSlice.flowDetails);
     const isAccountValid = handleCheckAccount(flowDetails?.userEmail, email, flowDetails?.isAccessible);

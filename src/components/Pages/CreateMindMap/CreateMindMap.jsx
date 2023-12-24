@@ -15,6 +15,7 @@ export default function CreateMindMap({ email, data: { status, mindMapDetails } 
   const dispatch = useDispatch();
   const flowDetails = useSelector((state) => state.flowsSlice.flowDetails);
   const isLoading = useSelector((state) => state.flowsSlice.isLoading);
+  const route = useRouter()
 
   const [editFlow, resultEditFlow] = flows.useEditFlowDataMutation();
   const { 
@@ -39,6 +40,7 @@ export default function CreateMindMap({ email, data: { status, mindMapDetails } 
     () => {
       if (isSuccessEditFlow) 
       {
+        // route.refresh()
         dispatch(
           setFlowDetails(dataEdit)
         )

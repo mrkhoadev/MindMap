@@ -1,18 +1,14 @@
 "use client";
 import React from 'react';
-import { useRouter } from 'next/navigation';
 import { ISOextractDateTime } from '@/helpers/ExtractDateTime';
 import { useSession } from 'next-auth/react';
-import { flows } from '@/providers/services/flowsQuery';
 import { nanoid } from 'nanoid/non-secure';
 import { useDispatch } from 'react-redux';
 import { setIsLoading } from '@/providers/slice/flowsSlice';
 
-export default function AddBtn() {
+export default function AddBtn({postMindMap}) {
   const newId = nanoid();
-  const route = useRouter();
   const session = useSession();
-  const [postMindMap] = flows.usePostMindMapMutation();
   const dispatch = useDispatch()
 
   const handleAdd = () => {
@@ -38,10 +34,8 @@ export default function AddBtn() {
     dispatch(
       setIsLoading(true)
     )
-    setTimeout(() => {
-      route.push(`/mindmap/${newId}`)
-    }, 100)
   }
+
   return (
     <div className='h-[60px] flex justify-start items-center'>
       <button onClick={handleAdd} 

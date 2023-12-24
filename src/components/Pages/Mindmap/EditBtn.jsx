@@ -5,5 +5,5 @@ import { FaEdit } from "react-icons/fa";
 
 export default function EditBtn({id}) {
     const route = useRouter()
-  return (<button onClick={() => route.push(`/mindmap/${id}`)}><FaEdit /></button>)
+  return (<button onClick={() => {route.push(`/mindmap/${id}`)}}><FaEdit /></button>)
 }

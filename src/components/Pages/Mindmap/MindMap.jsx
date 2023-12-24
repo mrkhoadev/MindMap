@@ -10,6 +10,7 @@ import { extractDateTime } from "@/helpers/ExtractDateTime";
 import { deleteMindMap, deleteSelectedMindMap, setIsLoading, setMindMapList, setStatusCheckbox } from "@/providers/slice/flowsSlice";
 import DeleteBtn from "@/components/Pages/Mindmap/DeleteBtn";
 import DeleteSelectedBtn from "@/components/Pages/Mindmap/DeleteSelectedBtn";
+import { useRouter } from "next/navigation";
 
 const tableClass = {
   class: 'w-full',
@@ -28,9 +29,12 @@ export default function MindMap({ session = '', data: { status, mindMapData } })
   const isSelected = useSelector((state) => state.flowsSlice.isSelected);
   const mindMapList = useSelector((state) => state.flowsSlice.mindMapList);
   const isLoading = useSelector((state) => state.flowsSlice.isLoading);
+  const route = useRouter()
 
   const [deleteMutation, resultDeleteMutation] = flows.useDeleteMindMapMutation();
-  const [deleteSelectedMutation, resultDeleteSelected] = flows.useDeleteSelectedMindMapMutation()
+  const [deleteSelectedMutation, resultDeleteSelected] = flows.useDeleteSelectedMindMapMutation();
+  const [postMindMap, resultPostMindMap] = flows.usePostMindMapMutation();
+
 
   const {
           isSuccess: isSuccessDelete,
@@ -38,9 +42,14 @@ export default function MindMap({ session = '', data: { status, mindMapData } })
         } = resultDeleteMutation
 
   const {
-          isSuccess: isSuccessDeleteSelected
+          isSuccess: isSuccessDeleteSelected,
+          originalArgs: argsDeleteSelected
         } = resultDeleteSelected
 
+  const {
+          isSuccess: isSuccessPost,
+          originalArgs: argsPost
+        } = resultPostMindMap
 
   useEffect(
     () => {
@@ -57,6 +66,7 @@ export default function MindMap({ session = '', data: { status, mindMapData } })
     () => {
       if (isSuccessDelete)
       {
+        route.refresh()
         dispatch(
           deleteMindMap(argsDelete)
         )
@@ -71,12 +81,23 @@ export default function MindMap({ session = '', data: { status, mindMapData } })
   useEffect(
     () => {
       if (isSuccessDeleteSelected) {
-        console.log(resultDeleteSelected);
+        route.refresh();
+        dispatch(
+          deleteSelectedMindMap()
+        )
       }
     },[
+        dispatch,
         isSuccessDeleteSelected,
-        resultDeleteSelected
       ]
+  )
+
+  useEffect(
+    () => {
+      if (isSuccessPost && argsPost?.mindMapId) {
+        route.push(`./mindmap/${argsPost?.mindMapId}`)
+      }
+    },[isSuccessPost, argsPost]
   )
 
   //reset checkbox selected
@@ -107,7 +128,7 @@ export default function MindMap({ session = '', data: { status, mindMapData } })
       <div className="max-w-7xl mx-auto py-10">
         <div className="flex flex-col">
           <h1 className="text-4xl font-semibold">Mindmap của tôi</h1>
-          <AddBtn />
+          <AddBtn postMindMap={postMindMap} />
         </div>
         <div className="mt-8 border-2 border-[#aaa] rounded-md">
 

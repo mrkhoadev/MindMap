@@ -9,6 +9,7 @@ import useFlowStore from '@/providers/useFlowStore';
 import FlowSelector from '@/providers/selectors/FlowSelector';
 import { shallow } from 'zustand/shallow';
 import handleCheckAccount from '@/helpers/checkAccount';
+import { useRouter } from 'next/navigation';
 
 const formClass = {
   class: "flex flex-col gap-y-5",
@@ -19,6 +20,7 @@ const formClass = {
 
 export default function ShareForm({ onFormActiveChange, isShowForm, editFlow, name = '', description = '', email }) {
   const formRef = useRef(null);
+  const route = useRouter();
   const dispatch = useDispatch();
   const currentUrl = window.location.href;
   const { nodes, edges } = useFlowStore(FlowSelector, shallow);
@@ -51,6 +53,7 @@ export default function ShareForm({ onFormActiveChange, isShowForm, editFlow, na
       } 
       editFlow(newFlow);
       dispatch(setIsLoading(true));
+      route.refresh();
     }
   }
   const handleExternalSubmit = () => {
@@ -75,6 +78,7 @@ export default function ShareForm({ onFormActiveChange, isShowForm, editFlow, na
     } 
     editFlow(newFlow);
     dispatch(setIsLoading(true));
+    route.refresh()
     return;
   };
 
