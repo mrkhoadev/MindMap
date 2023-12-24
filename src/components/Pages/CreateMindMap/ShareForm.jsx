@@ -9,7 +9,6 @@ import useFlowStore from '@/providers/useFlowStore';
 import FlowSelector from '@/providers/selectors/FlowSelector';
 import { shallow } from 'zustand/shallow';
 import handleCheckAccount from '@/helpers/checkAccount';
-import { useRouter } from 'next/navigation';
 
 const formClass = {
   class: "flex flex-col gap-y-5",
@@ -27,7 +26,7 @@ export default function ShareForm({ onFormActiveChange, isShowForm, editFlow, na
   const [descriptionText, setDescriptionText] = useState(htmlScript(description))
   const flowDetails = useSelector((state) => state.flowsSlice.flowDetails);
   const [accessibility, setAccessibility] = useState(
-    handleCheckAccount(flowDetails?.userEmail, email, flowDetails?.isAccessible) ? "private" : "public"
+    !flowDetails?.isAccessible ? "private" : "public"
   );
   const handleTitleOnChange = (e) => {
     setNameText(e.target.value)

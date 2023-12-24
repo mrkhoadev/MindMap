@@ -1,7 +1,8 @@
 "use client";
+import { handleRevaliDate } from "@/lib/revaliDate";
 import { signOut } from "next-auth/react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import React from "react";
 
 const headerCSS = {
@@ -20,6 +21,7 @@ const inactiveClass = "text-200 hover:bg-accent-200";
 export default function Header({ session }) {
   const pathname = usePathname();
   const pageName = pathname.split("/")[1];
+  const route = useRouter()
   return (
     <header className={`bg-white`}>
       <div
@@ -112,12 +114,12 @@ export default function Header({ session }) {
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    href={`/mindmap`}
+                  <button
+                  onClick={async () => {await handleRevaliDate("mindmap"); route.push("/mindmap")}}
                     className={`${headerCSS.itemLink} text-primary-100 hover:bg-accent-300 border border-[transparent]`}
                   >
                     Mindmap
-                  </Link>
+                  </button>
                 </li>
                 <li>
                   <button

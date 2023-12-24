@@ -11,6 +11,7 @@ import { setMindMapList } from "@/providers/slice/flowsSlice";
 import DeleteBtn from "@/components/Pages/Mindmap/DeleteBtn";
 import DeleteSelectedBtn from "@/components/Pages/Mindmap/DeleteSelectedBtn";
 import { useRouter } from "next/navigation";
+import { handleRevaliDate } from "@/lib/revaliDate"; 
 
 const tableClass = {
   class: 'w-full',
@@ -50,6 +51,7 @@ export default function MindMap({ session = '', data: { status, mindMapData } })
           originalArgs: argsPost
         } = resultPostMindMap
 
+        
   //Thêm data vào context khi lần đầu truy cập trang!
   useEffect(
     () => {
@@ -66,11 +68,11 @@ export default function MindMap({ session = '', data: { status, mindMapData } })
     () => {
       if (isSuccessDelete)
       {
-        route.refresh()
+        (async ()=> {
+          await handleRevaliDate()
+        })()
       }
     },[
-        route,
-        argsDelete,
         isSuccessDelete,
       ]
   )
@@ -78,10 +80,11 @@ export default function MindMap({ session = '', data: { status, mindMapData } })
   useEffect(
     () => {
       if (isSuccessDeleteSelected) {
-        route.refresh()
+        (async ()=> {
+          await handleRevaliDate()
+        })()
       }
     },[
-        route,
         isSuccessDeleteSelected,
       ]
   )

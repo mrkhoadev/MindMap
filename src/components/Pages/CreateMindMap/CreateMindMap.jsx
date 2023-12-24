@@ -9,13 +9,12 @@ import FlowTitle from "@/components/Pages/CreateMindMap/FlowTitle";
 import { setFlowDetails } from "@/providers/slice/flowsSlice";
 import errorImg from '@/assets/images/error/error.png'
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { handleRevaliDateDetails } from "@/lib/revaliDate"; 
 
 export default function CreateMindMap({ email, data: { status, mindMapDetails } }) {
   const dispatch = useDispatch();
   const flowDetails = useSelector((state) => state.flowsSlice.flowDetails);
   const isLoading = useSelector((state) => state.flowsSlice.isLoading);
-  const route = useRouter()
   const [editFlow, resultEditFlow] = flows.useEditFlowDataMutation();
   const { 
           isError: isErrorEdit,
@@ -28,11 +27,8 @@ export default function CreateMindMap({ email, data: { status, mindMapDetails } 
     () => {
       if (mindMapDetails !== null) {
         dispatch(setFlowDetails(mindMapDetails));
-      } else {
-        route.refresh()
-      }
+      } 
     },[
-        route,
         dispatch,
         mindMapDetails
       ]
@@ -42,21 +38,12 @@ export default function CreateMindMap({ email, data: { status, mindMapDetails } 
     () => {
       if (isSuccessEditFlow) 
       {
-        route.refresh();
-      }
-      if (isErrorEdit)
-      {
-        dispatch(
-          setFlowDetails(argsEdit)
-        )
+        (async ()=> {
+          await handleRevaliDateDetails()
+        })()
       }
     },[
-        dispatch,
-        argsEdit,
-        dataEdit,
-        isErrorEdit,
         isSuccessEditFlow,
-        route
       ]
   )
 
