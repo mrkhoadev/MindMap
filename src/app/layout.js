@@ -1,7 +1,6 @@
 import "@/assets/css/style.css";
 import Providers from "@/providers/Provider";
 import { getServerSession } from "next-auth";
-import "@/assets/css/loading.css";
 
 export const metadata = {
   title: "Mindmap Flow",
