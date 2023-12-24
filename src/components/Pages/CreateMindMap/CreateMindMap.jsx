@@ -9,7 +9,7 @@ import FlowTitle from "@/components/Pages/CreateMindMap/FlowTitle";
 import { setFlowDetails } from "@/providers/slice/flowsSlice";
 import errorImg from '@/assets/images/error/error.png'
 import Image from "next/image";
-import { handleRevaliDateDetails } from "@/lib/revaliDate"; 
+import { handleRevaliDate, handleRevaliDateDetails } from "@/lib/revaliDate"; 
 
 export default function CreateMindMap({ email, data: { status, mindMapDetails } }) {
   const dispatch = useDispatch();
@@ -28,6 +28,9 @@ export default function CreateMindMap({ email, data: { status, mindMapDetails } 
       if (mindMapDetails !== null) {
         dispatch(setFlowDetails(mindMapDetails));
       } 
+      (async ()=> {
+        await handleRevaliDate()
+      })()
     },[
         dispatch,
         mindMapDetails
