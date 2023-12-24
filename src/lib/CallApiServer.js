@@ -6,7 +6,7 @@ const getMindMap = async (email) => {
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_MY_SERVER_API}/mindmap?userEmail=${email}`, {
         next: {
-          tags: "mindmap",
+          tags: ["mindmap"],
         },
       });
       if (response.ok) {
@@ -27,7 +27,7 @@ const getMindMapDetails = async (id) => {
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_MY_SERVER_API}/mindMap?mindMapId=${id}`, {
         next: {
-          tags: "mindmapDetails",
+          tags: ["mindmapDetails"],
         },
       });
       if (response.ok)
