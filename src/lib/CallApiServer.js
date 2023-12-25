@@ -23,7 +23,7 @@ const getMindMap = async (email) => {
 };
 
 
-const getMindMapDetails = async (id) => {
+const getMindMapDetails = async (id, email) => {
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_MY_SERVER_API}/mindMap?mindMapId=${id}`, {
         next: {
@@ -37,7 +37,8 @@ const getMindMapDetails = async (id) => {
         revalidateTag(`mindmap`);
         return {
           status: response.status,
-          mindMapDetails: details[0] || null
+          mindMapDetails: details[0] || null,
+          isAccountValid: details[0]?.userEmail !== email && details[0]?.isAccessible ? false : true,
         }
       }
       return {

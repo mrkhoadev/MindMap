@@ -8,7 +8,7 @@ import ReactFlow, {
   ConnectionLineType,
 } from "reactflow";
 import "reactflow/dist/style.css";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import CustomNode from "./CustomNode";
 import CustomEdge from "./CustomEdge";
 import useFlowStore from "@/providers/useFlowStore";
@@ -17,16 +17,12 @@ import nodeColor from "@/helpers/MiniMap";
 import FlowSelector from "@/providers/selectors/FlowSelector";
 import CustomControls from "./CustomControls";
 
-const nodeTypes = { branch: CustomNode, title: CustomNode };
-const edgeTypes = {
-  branch: CustomEdge,
-};
 const nodeOrigin = [0.5, 0.5];
 const connectionLineStyle = {
   stroke: "#4f46e5",
   strokeWidth: 3,
 };
-function Flow({ map, email }) {
+function Flow({ map, isAccountValid }) {
   const {
     nodes,
     edges,
@@ -42,6 +38,16 @@ function Flow({ map, email }) {
   const [isScreen, setIsScreen] = useState(false);
   const { screenToFlowPosition } = useReactFlow();
   const store = useStoreApi();
+  
+  const nodeTypes = useMemo(
+    () => ({
+      branch: CustomNode, title: CustomNode,
+    }),
+    [],
+  );
+  const edgeTypes = {
+    branch: CustomEdge,
+  };
 
   const getChildNodePosition = (event, parentNode) => {
     const { domNode } = store.getState();
@@ -124,7 +130,7 @@ function Flow({ map, email }) {
         <CustomControls 
           onScreenActiveChange={setIsScreen}
           isScreen={isScreen}
-          email={email}
+          isAccountValid={isAccountValid}
         />
       </ReactFlow>
     </div>

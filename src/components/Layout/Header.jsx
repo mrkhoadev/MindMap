@@ -117,20 +117,21 @@ export default function Header({ session }) {
                   </Link>
                 </li>
                 <li>
-                  <button
-                    onClick={
-                      async () => {
-                        dispatch(
-                          setIsLoading(true)
-                        )
-                        await handleRevaliDate();
-                        route.push(`/mindmap`)
-                      }
-                    }
+                  <Link
+                    // onClick={
+                    //   async () => {
+                    //     dispatch(
+                    //       setIsLoading(true)
+                    //     )
+                    //     await handleRevaliDate();
+                    //     route.push(`/mindmap`)
+                    //   }
+                    // }
+                    href={`/mindmap`}
                     className={`${headerCSS.itemLink} text-primary-100 hover:bg-accent-300 border border-[transparent]`}
                   >
                     Mindmap
-                  </button>
+                  </Link>
                 </li>
                 <li>
                   <button

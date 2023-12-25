@@ -8,7 +8,6 @@ import { setIsLoading } from '@/providers/slice/flowsSlice';
 import useFlowStore from '@/providers/useFlowStore';
 import FlowSelector from '@/providers/selectors/FlowSelector';
 import { shallow } from 'zustand/shallow';
-import handleCheckAccount from '@/helpers/checkAccount';
 
 const formClass = {
   class: "flex flex-col gap-y-5",
@@ -17,7 +16,7 @@ const formClass = {
   input: "peer h-10 w-full rounded-md bg-gray-50 px-4 drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400 outline-none",
 }
 
-export default function ShareForm({ onFormActiveChange, isShowForm, editFlow, name = '', description = '', email }) {
+export default function ShareForm({ onFormActiveChange, isShowForm, editFlow, name = '', description = '', isAccountValid }) {
   const formRef = useRef(null);
   const dispatch = useDispatch();
   const currentUrl = window.location.href;
@@ -26,7 +25,7 @@ export default function ShareForm({ onFormActiveChange, isShowForm, editFlow, na
   const [descriptionText, setDescriptionText] = useState(htmlScript(description))
   const flowDetails = useSelector((state) => state.flowsSlice.flowDetails);
   const [accessibility, setAccessibility] = useState(
-    !flowDetails?.isAccessible ? "private" : "public"
+    !isAccountValid ? "public" : !flowDetails?.isAccessible ? "private" : "public"
   );
   const handleTitleOnChange = (e) => {
     setNameText(e.target.value)
@@ -36,7 +35,7 @@ export default function ShareForm({ onFormActiveChange, isShowForm, editFlow, na
   }
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    if (handleCheckAccount(flowDetails?.userEmail, email, flowDetails?.isAccessible))
+    if (isAccountValid)
     {
       const newFlow = 
       {
@@ -80,6 +79,17 @@ export default function ShareForm({ onFormActiveChange, isShowForm, editFlow, na
 
   useEffect(
     () => {
+      setAccessibility(
+        !isAccountValid ? "public" : !flowDetails?.isAccessible ? "private" : "public"
+      )
+    },[
+        isAccountValid,
+        flowDetails?.isAccessible,
+      ]
+  )
+
+  useEffect(
+    () => {
       setNameText(htmlScript(name));
       setDescriptionText(htmlScript(description))
     },[
@@ -110,7 +120,7 @@ export default function ShareForm({ onFormActiveChange, isShowForm, editFlow, na
                     <div 
                       className={clsx(style["radio-buttons-container"])}
                     >
-                      {handleCheckAccount(flowDetails?.userEmail, email, flowDetails?.isAccessible) && (
+                      {isAccountValid && (
                         <div 
                           className={clsx(style["radio-button"])}
                         >
@@ -150,7 +160,7 @@ export default function ShareForm({ onFormActiveChange, isShowForm, editFlow, na
                     </div>
 
                     <div>
-                      {accessibility === "private" && handleCheckAccount(flowDetails?.userEmail, email, flowDetails?.isAccessible) && (
+                      {accessibility === "private" && isAccountValid && (
                         <p className='text-lg'>Nếu chọn riêng tư, chỉ có bạn mới được quyền xem Mindmap này</p>
                       )}
                       {accessibility === "public" && (
@@ -188,7 +198,7 @@ export default function ShareForm({ onFormActiveChange, isShowForm, editFlow, na
                               onChange={handleTitleOnChange}
                               value={nameText} 
                               name='titleInput'
-                              readOnly={!handleCheckAccount(flowDetails?.userEmail, email, flowDetails?.isAccessible)}
+                              readOnly={!isAccountValid}
                             />
                             <label 
                               htmlFor="title-input" className={`${formClass.label}`}
@@ -206,7 +216,7 @@ export default function ShareForm({ onFormActiveChange, isShowForm, editFlow, na
                               onChange={handleDescriptionOnChange}
                               value={descriptionText} 
                               name='titleInput'
-                              readOnly={!handleCheckAccount(flowDetails?.userEmail, email, flowDetails?.isAccessible)}
+                              readOnly={!isAccountValid}
                             />
                             <label 
                               htmlFor="description-input" className={`${formClass.label}`}
@@ -246,7 +256,7 @@ export default function ShareForm({ onFormActiveChange, isShowForm, editFlow, na
                       <FaXmark />
                       Đóng
                     </button>
-                    {handleCheckAccount(flowDetails?.userEmail, email, flowDetails?.isAccessible) && (
+                    {isAccountValid && (
                       <button 
                         onClick={handleExternalSubmit}
                         className='flex gap-x-1 items-center bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700'

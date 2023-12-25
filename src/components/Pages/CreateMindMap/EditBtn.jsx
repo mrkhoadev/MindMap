@@ -6,13 +6,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import useFlowStore from "@/providers/useFlowStore";
 import FlowSelector from "@/providers/selectors/FlowSelector";
 import { shallow } from "zustand/shallow";
-import handleCheckAccount from '@/helpers/checkAccount';
 
-export default function EditBtn({name, description, editFlow, email}) {
+export default function EditBtn({name, description, editFlow, isAccountValid}) {
     const dispatch = useDispatch();
     const { nodes, edges } = useFlowStore(FlowSelector, shallow);
     const flowDetails = useSelector((state) => state.flowsSlice.flowDetails);
-    const isAccountValid = handleCheckAccount(flowDetails?.userEmail, email, flowDetails?.isAccessible);
     const handleSave = () => {
         if (isAccountValid) {
             const newFlow = {

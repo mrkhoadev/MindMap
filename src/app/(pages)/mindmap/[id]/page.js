@@ -5,10 +5,10 @@ import React from "react";
 
 export const dynamic = "force-dynamic";
 
-export default async function CreateMindMapRoute({ params: { id }, ...props }) {
+export default async function CreateMindMapRoute({ params: { id } }) {
   const session = await getServerSession();
   const email = session?.user?.email;
-  const data = await getMindMapDetails(id);
+  const data = await getMindMapDetails(id, email);
   
   return (
     <main>

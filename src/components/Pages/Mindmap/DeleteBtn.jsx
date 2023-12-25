@@ -5,7 +5,6 @@ import { setIsLoading } from "@/providers/slice/flowsSlice";
 import { useDispatch } from "react-redux";
 
 export default function DeleteBtn({ id, deleteMutation }) {
-
   const dispatch = useDispatch()
 
   const handleDelete = () => {

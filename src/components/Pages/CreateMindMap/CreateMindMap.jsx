@@ -11,11 +11,12 @@ import errorImg from '@/assets/images/error/error.png'
 import Image from "next/image";
 import { handleRevaliDateDetails } from "@/lib/revaliDate"; 
 
-export default function CreateMindMap({ email, data: { status, mindMapDetails } }) {
+export default function CreateMindMap({ email, data: { status, mindMapDetails, isAccountValid = false } }) {
   const dispatch = useDispatch();
   const flowDetails = useSelector((state) => state.flowsSlice.flowDetails);
   const isLoading = useSelector((state) => state.flowsSlice.isLoading);
   const [editFlow, resultEditFlow] = flows.useEditFlowDataMutation();
+
   const { 
           isError: isErrorEdit,
           isSuccess: isSuccessEditFlow,
@@ -72,8 +73,8 @@ export default function CreateMindMap({ email, data: { status, mindMapDetails } 
   return (
     <div className="max-w-6xl mx-auto py-10 flex flex-col gap-y-5 min-h-[100vh]">
       <ReactFlowProvider>
-        <FlowTitle editFlow={editFlow} email={email} />
-        <Flow map={flowDetails?.map || []} email={email} />
+        <FlowTitle editFlow={editFlow} isAccountValid={isAccountValid} />
+        <Flow map={flowDetails?.map || []} isAccountValid={isAccountValid} />
       </ReactFlowProvider>
     </div>
   );

@@ -11,7 +11,6 @@ import { HiOutlineLockClosed } from "react-icons/hi2";
 import { HiOutlineLockOpen } from "react-icons/hi2";
 import { AiOutlineFullscreen } from "react-icons/ai";
 import { AiOutlineFullscreenExit } from "react-icons/ai";
-import handleCheckAccount from '@/helpers/checkAccount';
 import { useSelector } from 'react-redux';
 
 const selector = (s) => ({
@@ -36,14 +35,13 @@ const CustomControls = ({
   children,
   position = 'bottom-left',
   isScreen,
-  email
+  isAccountValid,
 }) => {
   const store = useStoreApi();
   const [isVisible, setIsVisible] = useState(false);
   const { isInteractive, minZoomReached, maxZoomReached } = useStore(selector, shallow);
   const { zoomIn, zoomOut, fitView } = useReactFlow();
   const flowDetails = useSelector((state) => state.flowsSlice.flowDetails);
-  const isAccountValid = handleCheckAccount(flowDetails?.userEmail, email, flowDetails?.isAccessible);
 
 
   useEffect(() => {
@@ -61,7 +59,7 @@ const CustomControls = ({
         elementsSelectable: false,
       });
     }
-  }, [email, isAccountValid, store]);
+  }, [ isAccountValid, store]);
 
   if (!isVisible) {
     return null;
@@ -83,7 +81,7 @@ const CustomControls = ({
   };
 
   const onToggleInteractivity = () => {
-    if (handleCheckAccount(flowDetails?.userEmail, email, flowDetails?.isAccessible))
+    if (isAccountValid)
     {
       store.setState({
         nodesDraggable: !isInteractive,
