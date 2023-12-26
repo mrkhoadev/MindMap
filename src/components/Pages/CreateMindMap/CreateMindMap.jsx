@@ -52,19 +52,19 @@ export default function CreateMindMap({ email, data: { status, mindMapDetails, i
   {
     return <h1>Error</h1>
   }
-  if (
-      mindMapDetails === null || 
-      (
-        mindMapDetails?.userEmail !== email &&
-        !mindMapDetails?.isAccessible 
-      ) 
-    )
-  {
-    return <div className="w-[700px] mx-auto relative">
-      <h1 className="text-5xl absolute bottom-10 translate-x-[-50%] left-[50%] w-[520px]">MindMap không tồn tại!</h1>
-      <Image src={errorImg} width={0} height={0} priority alt="error" className="w-full h-auto" />
-    </div>
-  }
+  // if (
+  //     mindMapDetails === null || 
+  //     (
+  //       mindMapDetails?.userEmail !== email &&
+        // !mindMapDetails?.isAccessible 
+  //     ) 
+  //   )
+  // {
+  //   return <div className="w-[700px] mx-auto relative">
+  //     <h1 className="text-5xl absolute bottom-10 translate-x-[-50%] left-[50%] w-[520px]">MindMap không tồn tại!</h1>
+  //     <Image src={errorImg} width={0} height={0} priority alt="error" className="w-full h-auto" />
+  //   </div>
+  // }
   if (isLoading) 
   {
     return <Loading />
