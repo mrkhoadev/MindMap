@@ -45,9 +45,12 @@ function Flow({ map, isAccountValid }) {
     }),
     [],
   );
-  const edgeTypes = {
-    branch: CustomEdge,
-  };
+  const edgeTypes =  useMemo(
+    () => ({
+      branch: CustomEdge,
+    }),
+    [],
+  );
 
   const getChildNodePosition = (event, parentNode) => {
     const { domNode } = store.getState();
