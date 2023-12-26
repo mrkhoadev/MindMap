@@ -3,7 +3,7 @@ import { getMindMapDetails } from "@/lib/CallApiServer";
 import { getServerSession } from "next-auth";
 import React from "react";
 
-export const dynamic = "force-dynamic";
+// export const dynamic = "force-dynamic";
 
 export default async function CreateMindMapRoute({ params: { id } }) {
   const session = await getServerSession();

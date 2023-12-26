@@ -15,7 +15,7 @@ import { handleRevaliDate } from "@/lib/revaliDate";
 
 const tableClass = {
   class: 'w-full',
-  thead: 'border-b-2 border-[#aaa] bg-[#eee]',
+  thead: 'border-b-2 border-[#aaa] bg-[#eee] select-none',
   tbody: 'border-b',
   row: 'text-left',
   col1: 'text-center w-[70px] py-3',
@@ -118,7 +118,7 @@ export default function MindMap({ session = '', data: { status, mindMapData } })
       <div className="max-w-7xl mx-auto py-10">
         <div className="flex flex-col">
           <h1 className="text-4xl font-semibold">Mindmap của tôi</h1>
-          <AddBtn postMindMap={postMindMap} />
+          <AddBtn postMindMap={postMindMap} email={session?.user?.email} />
         </div>
         <div className="mt-8 border-2 border-[#aaa] rounded-md">
 
@@ -136,7 +136,9 @@ export default function MindMap({ session = '', data: { status, mindMapData } })
               </tr>
             </thead>
 
-            <tbody className={`${tableClass.tbody}`}>
+            <tbody 
+              className={`${tableClass.tbody}`}
+            >
               {
                 mindMapList.length >= 1 ? 
                 (mindMapList.map((element) => {
