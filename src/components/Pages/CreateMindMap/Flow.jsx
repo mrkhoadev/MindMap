@@ -127,7 +127,7 @@ function Flow({ map, isAccountValid }) {
         proOptions={proOptions}
       >
         <Background
-          gap={10}
+          gap={10} 
           color="#f1f1f1"
           variant={BackgroundVariant.Lines}
         />
