@@ -12,6 +12,7 @@ import DeleteBtn from "@/components/Pages/Mindmap/DeleteBtn";
 import DeleteSelectedBtn from "@/components/Pages/Mindmap/DeleteSelectedBtn";
 import { useRouter } from "next/navigation";
 import { handleRevaliDate } from "@/lib/revaliDate"; 
+import { handleAlert } from "@/helpers/alertify";
 
 const tableClass = {
   class: 'w-full',
@@ -25,7 +26,7 @@ const tableClass = {
   col5: 'w-1/6 text-center px-2',
 }
 
-export default function MindMap({ session = '', data: { status, mindMapData } }) {
+export default function MindMap({ session = '', data: { status = 'idle', mindMapData = null } }) {
   const dispatch = useDispatch();
   const isSelected = useSelector((state) => state.flowsSlice.isSelected);
   const mindMapList = useSelector((state) => state.flowsSlice.mindMapList);
@@ -38,12 +39,14 @@ export default function MindMap({ session = '', data: { status, mindMapData } })
 
   const {
           isSuccess: isSuccessDelete,
-          originalArgs: argsDelete
+          originalArgs: argsDelete,
+          isError: isErrorDelete
         } = resultDeleteMutation
 
   const {
           isSuccess: isSuccessDeleteSelected,
-          originalArgs: argsDeleteSelected
+          originalArgs: argsDeleteSelected,
+          isError: isErrorDeleteSelected
         } = resultDeleteSelected
 
   const {
@@ -68,11 +71,17 @@ export default function MindMap({ session = '', data: { status, mindMapData } })
     () => {
       if (isSuccessDelete)
       {
+        handleAlert("success", "Đã xóa thành công!");
         (async ()=> {
           await handleRevaliDate()
         })()
       }
+      if (isErrorDelete)
+      {
+        handleAlert("error", "Xóa thất bại, Vui lòng thử lại!");
+      }
     },[
+        isErrorDelete,
         isSuccessDelete,
       ]
   )
@@ -80,11 +89,17 @@ export default function MindMap({ session = '', data: { status, mindMapData } })
   useEffect(
     () => {
       if (isSuccessDeleteSelected) {
+        handleAlert("success", "Đã xóa thành công!");
         (async ()=> {
           await handleRevaliDate()
         })()
       }
+      if (isErrorDeleteSelected)
+      {
+        handleAlert("error", "Thất bại rồi! Bảo không thèm nghe chán lắm cơ.");
+      }
     },[
+        isErrorDeleteSelected,
         isSuccessDeleteSelected,
       ]
   )

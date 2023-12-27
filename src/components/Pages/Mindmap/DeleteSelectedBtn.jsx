@@ -12,20 +12,29 @@ export default function DeleteSelectedBtn(
     const mindMapList = useSelector((state) => state.flowsSlice.mindMapList);
     const dispatch = useDispatch();
     
-    const handleDeleteAll = () => {
-        const selectedId = mindMapList.map(
-            (item) => {
-                if (item.selected) 
-                {
-                    return item.id;
-                }
-                return null;
-            }
-        ).filter((i) => i);
-        deleteSelectedMutation(selectedId);
-        dispatch(
-            setIsLoading(true)
-        )
+    const handleDeleteAll = async () => {
+        if (typeof document !== 'undefined') {
+            const {confirm, error} = await import('alertifyjs');
+            confirm("Xóa những MindMap đã chọn?","Dương nó chưa fix cho cái lỗi no-cors nên chức năng này chưa hoạt động được! Bạn vẫn muốn tiếp tục thử chứ?",
+            function(){
+                const selectedId = mindMapList.map(
+                    (item) => {
+                        if (item.selected) 
+                        {
+                            return item.id;
+                        }
+                        return null;
+                    }
+                ).filter((i) => i);
+                deleteSelectedMutation(selectedId);
+                dispatch(
+                    setIsLoading(true)
+                )
+            },
+            function(){
+              error('Đã hủy!');
+            });
+          }
     }
 
   return (

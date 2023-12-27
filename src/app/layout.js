@@ -1,4 +1,6 @@
 import "@/assets/css/style.css";
+import 'alertifyjs/build/css/alertify.css';
+import 'alertifyjs/build/css/themes/default.css';
 import Providers from "@/providers/Provider";
 import { getServerSession } from "next-auth";
 

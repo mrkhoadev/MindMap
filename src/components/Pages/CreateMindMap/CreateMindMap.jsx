@@ -10,6 +10,7 @@ import { setFlowDetails } from "@/providers/slice/flowsSlice";
 import errorImg from '@/assets/images/error/error.png'
 import Image from "next/image";
 import { handleRevaliDateDetails } from "@/lib/revaliDate"; 
+import { handleAlert } from "@/helpers/alertify";
 
 export default function CreateMindMap({ email, data: { status, mindMapDetails, isAccountValid = false } }) {
   const dispatch = useDispatch();
@@ -39,6 +40,7 @@ export default function CreateMindMap({ email, data: { status, mindMapDetails, i
     () => {
       if (isSuccessEditFlow) 
       {
+        handleAlert("warning", "Đã lưu thành công!");
         (async ()=> {
           await handleRevaliDateDetails()
         })()
