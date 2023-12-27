@@ -186,7 +186,7 @@ export default function MindMap({ session = '', data: { status = 'idle', mindMap
                         <td className={`${tableClass.col5}`}>
                           <div className="flex gap-x-5 justify-center text-2xl text-200">
                             <EditBtn id={mindMapId} />
-                            <DeleteBtn id={id} deleteMutation={deleteMutation} />
+                            <DeleteBtn id={id} name={name} deleteMutation={deleteMutation} />
                           </div>
                         </td>
                       </tr>
