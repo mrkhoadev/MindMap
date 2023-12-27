@@ -15,7 +15,7 @@ export default function DeleteSelectedBtn(
     const handleDeleteAll = async () => {
         if (typeof document !== 'undefined') {
             const {confirm, error} = await import('alertifyjs');
-            confirm("Xóa những MindMap đã chọn?","Dương chưa fix cho cái lỗi no-cors nên chức năng này chưa hoạt động được! Bạn vẫn muốn tiếp tục thử chứ?",
+            confirm("Xóa những MindMap đã chọn?","Đang bị dính quả lỗi 'no-cors' bên phía server nên chức năng này chưa hoạt động được! Bạn vẫn muốn tiếp tục thử chứ?",
             function(){
                 const selectedId = mindMapList.map(
                     (item) => {
