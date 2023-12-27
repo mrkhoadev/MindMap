@@ -1,14 +1,12 @@
 "use client";
 import React from 'react';
 import { ISOextractDateTime } from '@/helpers/ExtractDateTime';
-import { useSession } from 'next-auth/react';
 import { nanoid } from 'nanoid/non-secure';
 import { useDispatch } from 'react-redux';
 import { setIsLoading } from '@/providers/slice/flowsSlice';
 
-export default function AddBtn({postMindMap}) {
+export default function AddBtn({postMindMap, email}) {
   const newId = nanoid();
-  const session = useSession();
   const dispatch = useDispatch()
 
   const handleAdd = () => {
@@ -28,7 +26,7 @@ export default function AddBtn({postMindMap}) {
         isInteractive: true,
       },
       isAccessible: false,
-      userEmail: session?.data?.email,
+      userEmail: email,
       create_at: ISOextractDateTime(time),
     }
     postMindMap(newMindMap);
