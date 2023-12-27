@@ -22,6 +22,7 @@ const connectionLineStyle = {
   stroke: "#4f46e5",
   strokeWidth: 3,
 };
+const proOptions = { hideAttribution: true };
 function Flow({ map, isAccountValid }) {
   const {
     nodes,
@@ -123,7 +124,7 @@ function Flow({ map, isAccountValid }) {
         onConnect={onConnect} // kết nối
         fitView
         deleteKeyCode={["Delete", "Backspace"]}
-        
+        proOptions={proOptions}
       >
         <Background
           gap={10}
