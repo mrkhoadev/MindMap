@@ -1,6 +1,4 @@
 "use client";
-import { handleRevaliDate } from "@/lib/revaliDate";
-import { setIsLoading } from "@/providers/slice/flowsSlice";
 import { signOut } from "next-auth/react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -15,16 +13,14 @@ const headerCSS = {
   nav: "",
   navList: "",
   listItem: "",
-  itemLink: "px-4 py-2 block rounded-md transition-colors",
+  itemLink: "px-4 py-2 block rounded-md transition-colors border",
 };
-const activeClass = "text-[#fff] bg-accent-100";
-const inactiveClass = "text-200 hover:bg-accent-200";
+const activeClass = "text-[#fff] bg-accent-100 border-[#4F46E5]";
+const inactiveClass = "text-200 hover:bg-accent-200 border-transparent";
 
 export default function Header({ session }) {
   const pathname = usePathname();
   const pageName = pathname.split("/")[1];
-  const dispatch = useDispatch();
-  const route = useRouter()
   return (
     <header className={`bg-white`}>
       <div
@@ -62,7 +58,7 @@ export default function Header({ session }) {
                 href={`/features`}
                 className={`${headerCSS.itemLink} ${
                   pageName === "features" ? activeClass : inactiveClass
-                }`}
+                } border-acc`}
               >
                 Tính năng
               </Link>
@@ -118,17 +114,8 @@ export default function Header({ session }) {
                 </li>
                 <li>
                   <Link
-                    // onClick={
-                    //   async () => {
-                    //     dispatch(
-                    //       setIsLoading(true)
-                    //     )
-                    //     await handleRevaliDate();
-                    //     route.push(`/mindmap`)
-                    //   }
-                    // }
                     href={`/mindmap`}
-                    className={`${headerCSS.itemLink} text-primary-100 hover:bg-accent-300 border border-[transparent]`}
+                    className={`${headerCSS.itemLink} ${pageName === "mindmap" ? activeClass : "text-primary-100 hover:bg-accent-300 border border-[transparent]"}`}
                   >
                     Mindmap
                   </Link>

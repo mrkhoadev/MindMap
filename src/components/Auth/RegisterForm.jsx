@@ -5,6 +5,7 @@ import { BiHide } from "react-icons/bi";
 import { BiShow } from "react-icons/bi";
 import { auth } from "@/providers/services/authQuery";
 import { signIn } from "next-auth/react";
+import Loading from "../Loading/Loading";
 
 const formCSS = {
   form: "w-full text-lg flex flex-col gap-y-2",
@@ -57,6 +58,12 @@ export default function RegisterForm() {
       })();
     }
   }, [isError, isSuccess, result, userInfo]);
+
+  if (isLoading)
+  {
+    return <Loading />
+  }
+
   return (
     <form className={formCSS.form} onSubmit={handleSubmit}>
       <h2 className={formCSS.title}>Đăng ký</h2>

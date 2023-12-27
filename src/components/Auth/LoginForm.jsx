@@ -5,6 +5,7 @@ import { BiHide } from "react-icons/bi";
 import { BiShow } from "react-icons/bi";
 import { signIn } from "next-auth/react";
 import { auth } from "@/providers/services/authQuery";
+import Loading from "../Loading/Loading";
 
 const formCSS = {
   form: "w-full text-lg flex flex-col gap-y-2",
@@ -48,6 +49,11 @@ export default function LoginForm() {
       })();
     }
   }, [isError, result, isSuccess]);
+
+  if (isLoading)
+  {
+    return <Loading />
+  }
 
   return (
     <form className={formCSS.form} onSubmit={handleSubmit}>
