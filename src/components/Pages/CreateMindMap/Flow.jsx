@@ -101,6 +101,7 @@ function Flow({ map, isAccountValid }) {
       setDataFlow({
         nodes: map?.nodes,
         edges: map?.edges,
+        isInteractive: map?.isInteractive,
       })
     }
   }, [map, setDataFlow])

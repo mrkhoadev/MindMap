@@ -9,7 +9,7 @@ import { shallow } from "zustand/shallow";
 
 export default function EditBtn({name, description, editFlow, isAccountValid}) {
     const dispatch = useDispatch();
-    const { nodes, edges } = useFlowStore(FlowSelector, shallow);
+    const { nodes, edges, isInteractive } = useFlowStore(FlowSelector, shallow);
     const flowDetails = useSelector((state) => state.flowsSlice.flowDetails);
     const handleSave = () => {
         if (isAccountValid) {
@@ -20,7 +20,8 @@ export default function EditBtn({name, description, editFlow, isAccountValid}) {
                 map: {
                     nodes,
                     edges,
-                }
+                    isInteractive,
+                },
             }
             editFlow(newFlow);
             dispatch(setIsLoading(true));

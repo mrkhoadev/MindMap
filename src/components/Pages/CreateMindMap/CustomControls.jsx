@@ -11,10 +11,10 @@ import { HiOutlineLockClosed } from "react-icons/hi2";
 import { HiOutlineLockOpen } from "react-icons/hi2";
 import { AiOutlineFullscreen } from "react-icons/ai";
 import { AiOutlineFullscreenExit } from "react-icons/ai";
-import { useSelector } from 'react-redux';
+import useFlowStore from '@/providers/useFlowStore';
+import FlowSelector from '@/providers/selectors/FlowSelector';
 
 const selector = (s) => ({
-  isInteractive: s.nodesDraggable || s.nodesConnectable || s.elementsSelectable,
   minZoomReached: s.transform[2] <= s.minZoom,
   maxZoomReached: s.transform[2] >= s.maxZoom,
 })
@@ -29,7 +29,6 @@ const CustomControls = ({
   onZoomIn,
   onZoomOut,
   onFitView,
-  onInteractiveChange,
   onScreenActiveChange,
   className,
   children,
@@ -39,27 +38,35 @@ const CustomControls = ({
 }) => {
   const store = useStoreApi();
   const [isVisible, setIsVisible] = useState(false);
-  const { isInteractive, minZoomReached, maxZoomReached } = useStore(selector, shallow);
+  const { minZoomReached, maxZoomReached } = useStore(selector, shallow);
+  const { isInteractive = true, setIsInteractive } = useFlowStore(FlowSelector, shallow);
   const { zoomIn, zoomOut, fitView } = useReactFlow();
-  const flowDetails = useSelector((state) => state.flowsSlice.flowDetails);
-
-
+  
   useEffect(() => {
     setIsVisible(true);
-    if (isAccountValid) {
-      store.setState({
-        nodesDraggable: true,
-        nodesConnectable: true,
-        elementsSelectable: true,
-      });
-    } else {
-      store.setState({
-        nodesDraggable: false,
-        nodesConnectable: false,
-        elementsSelectable: false,
-      });
-    }
-  }, [ isAccountValid, store]);
+  }, []);
+  useEffect(
+    () =>{
+      if (isAccountValid) 
+      {
+        store.setState({
+          nodesDraggable: isInteractive,
+          nodesConnectable: isInteractive,
+          elementsSelectable: isInteractive,
+        });
+      } else {
+        store.setState({
+          nodesDraggable: false,
+          nodesConnectable: false,
+          elementsSelectable: false,
+        });
+      }
+    },[
+        store,
+        isInteractive,
+        isAccountValid
+      ]
+  )
 
   if (!isVisible) {
     return null;
@@ -81,21 +88,15 @@ const CustomControls = ({
   };
 
   const onToggleInteractivity = () => {
-    if (isAccountValid)
+    if (isAccountValid) 
     {
-      store.setState({
-        nodesDraggable: !isInteractive,
-        nodesConnectable: !isInteractive,
-        elementsSelectable: !isInteractive,
-      });
-
-      onInteractiveChange?.(!isInteractive);
+      setIsInteractive(!isInteractive);
     }
   };
-
   const onToggleScreen = () => {
     onScreenActiveChange(!isScreen)
   }
+  
   
 
   return (

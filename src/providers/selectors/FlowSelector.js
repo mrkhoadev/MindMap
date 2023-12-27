@@ -7,6 +7,8 @@ const FlowSelector = (state) => ({
   onNodeDragStop: state.onNodeDragStop,
   onConnect: state.onConnect,
   setDataFlow: state.setDataFlow,
+  isInteractive: state.isInteractive,
+  setIsInteractive: state.setIsInteractive,
 });
 
 export default FlowSelector;

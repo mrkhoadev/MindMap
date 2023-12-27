@@ -6,8 +6,9 @@ import { nanoid } from "nanoid/non-secure";
 const useFlowStore = createWithEqualityFn((set, get) => ({
   nodes: [],
   edges: [],
-  setDataFlow: ({ nodes, edges }) => {
-    set({ nodes, edges });
+  isInteractive: true,
+  setDataFlow: ({ nodes, edges, isInteractive }) => {
+    set({ nodes, edges, isInteractive });
   },
   onNodesChange: (changes) => {
     const newChanges = changes
@@ -74,6 +75,11 @@ const useFlowStore = createWithEqualityFn((set, get) => ({
       edges: addEdge({ ...changes, type: "branch" }, get().edges),
     });
   },
+  setIsInteractive: (changes) => {
+    set({
+      isInteractive: changes,
+    });
+  }
 }));
 
 export default useFlowStore;

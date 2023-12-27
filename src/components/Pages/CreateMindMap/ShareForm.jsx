@@ -20,7 +20,7 @@ export default function ShareForm({ onFormActiveChange, isShowForm, editFlow, na
   const formRef = useRef(null);
   const dispatch = useDispatch();
   const currentUrl = window.location.href;
-  const { nodes, edges } = useFlowStore(FlowSelector, shallow);
+  const { nodes, edges, isInteractive } = useFlowStore(FlowSelector, shallow);
   const [nameText, setNameText] = useState(htmlScript(name));
   const [descriptionText, setDescriptionText] = useState(htmlScript(description))
   const flowDetails = useSelector((state) => state.flowsSlice.flowDetails);
@@ -46,6 +46,7 @@ export default function ShareForm({ onFormActiveChange, isShowForm, editFlow, na
         map: {
             nodes,
             edges,
+            isInteractive,
         },
       } 
       editFlow(newFlow);
@@ -70,6 +71,7 @@ export default function ShareForm({ onFormActiveChange, isShowForm, editFlow, na
       map: {
           nodes,
           edges,
+          isInteractive,
       },
     } 
     editFlow(newFlow);
