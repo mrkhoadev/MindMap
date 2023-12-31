@@ -50,16 +50,12 @@ export default function CreateMindMap({ email, data: { status, mindMapDetails, i
       ]
   )
 
-  if (status > 400)
+  if (status > 401)
   {
     return <h1>Error</h1>
   }
   if (
-      mindMapDetails === null || 
-      (
-        mindMapDetails?.userEmail !== email &&
-        !mindMapDetails?.isAccessible 
-      ) 
+      mindMapDetails === null 
     )
   {
     return <div className="w-[700px] mx-auto relative">

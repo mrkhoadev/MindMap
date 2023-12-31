@@ -1,4 +1,5 @@
 import Image from "next/image";
+import imgHome from "@/assets/images/pages/home/so-do-tu-duy.webp"
 
 export default function Home() {
   return (
@@ -16,9 +17,7 @@ export default function Home() {
             Sử dụng miễn phí
           </button>
           <Image
-            src={
-              "http://f8-mindmap.sanphamkythuat.online:880/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fso-do-tu-duy.95dad645.jpg&w=1200&q=75"
-            }
+            src={imgHome}
             width={672}
             height={352}
             style={{ width: "auto", height: "auto" }}

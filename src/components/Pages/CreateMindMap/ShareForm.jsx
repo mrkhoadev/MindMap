@@ -8,6 +8,10 @@ import { setIsLoading } from '@/providers/slice/flowsSlice';
 import useFlowStore from '@/providers/useFlowStore';
 import FlowSelector from '@/providers/selectors/FlowSelector';
 import { shallow } from 'zustand/shallow';
+import imgHome from "@/assets/images/pages/home/so-do-tu-duy.webp"
+import { usePathname } from 'next/navigation';
+import { usePagination } from '@nextui-org/react';
+
 
 const formClass = {
   class: "flex flex-col gap-y-5",
@@ -78,7 +82,8 @@ export default function ShareForm({ onFormActiveChange, isShowForm, editFlow, na
     dispatch(setIsLoading(true));
     return;
   };
-
+  // const url = window.location.href
+  // console.log(url);
   useEffect(
     () => {
       setAccessibility(
@@ -235,7 +240,7 @@ export default function ShareForm({ onFormActiveChange, isShowForm, editFlow, na
                               readOnly={true}
                               className={`${formClass.input}`} 
                               onClick={(e) => e.target.select()}
-                              defaultValue="http://f8-mindmap.sanphamkythuat.online:880/_next/static/media/so-do-tu-duy.95dad645.jpg"
+                              defaultValue={imgHome}
                             />
                             <label 
                               htmlFor="img-input" 
