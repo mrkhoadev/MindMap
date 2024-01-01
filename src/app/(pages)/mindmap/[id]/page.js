@@ -4,7 +4,6 @@ import { getServerSession } from "next-auth";
 import React from "react";
 import imgHome from "@/assets/images/pages/home/so-do-tu-duy.webp"
 
-
 export async function generateMetadata(
   { params }
 )

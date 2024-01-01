@@ -21,7 +21,6 @@ const formClass = {
 export default function ShareForm({ onFormActiveChange, isShowForm, editFlow, name = '', description = '', isAccountValid }) {
   const formRef = useRef(null);
   const dispatch = useDispatch();
-  const currentUrl = window.location.href;
   const { nodes, edges, isInteractive } = useFlowStore(FlowSelector, shallow);
   const [nameText, setNameText] = useState(htmlScript(name));
   const [descriptionText, setDescriptionText] = useState(htmlScript(description))
@@ -181,7 +180,7 @@ export default function ShareForm({ onFormActiveChange, isShowForm, editFlow, na
                               readOnly={true}
                               type="url" 
                               onClick={(e) => e.target.select()}
-                              defaultValue={currentUrl} 
+                              defaultValue={`${process.env.NEXT_PUBLIC_HOST}${'/mindmap/'}${flowDetails.mindMapId}`} 
                               name='shareInput'
                             />
                             <label 
