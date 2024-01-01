@@ -4,10 +4,10 @@ import 'alertifyjs/build/css/themes/default.css';
 import Providers from "@/providers/Provider";
 import { getServerSession } from "next-auth";
 
-export const metadata = {
-  title: "Mindmap Flow",
-  description: "Mindmap Flow - Công cụ xây dựng sơ đồ tư duy mạnh mẽ",
-};
+// export const metadata = {
+//   title: "Mindmap Flow",
+//   description: "Mindmap Flow - Công cụ xây dựng sơ đồ tư duy mạnh mẽ",
+// };
 
 export default async function RootLayout({ children }) {
   const session = await getServerSession();

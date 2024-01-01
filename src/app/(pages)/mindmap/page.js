@@ -4,8 +4,8 @@ import { getServerSession } from "next-auth";
 import React from "react";
 
 export const metadata = {
-  title: "My Mindmap",
-  description: "Manage your mindmap list"
+  title: "MindMap của tôi",
+  description: "Danh sách sơ đồ tư duy"
 }
 
 export default async function MindMapRoute() {

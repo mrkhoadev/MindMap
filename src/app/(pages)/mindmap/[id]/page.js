@@ -10,9 +10,9 @@ export async function generateMetadata(
 )
 {
   const id = params?.id;
-  // const session = await getServerSession();
-  // const email = session?.user?.email;
-  const data = await getMindMapDetails(id);
+  const session = await getServerSession();
+  const email = session?.user?.email;
+  const data = await getMindMapDetails(id, email);
   const title = data?.mindMapDetails?.name.slice(0, 60).trim();
 	const desc = data?.mindMapDetails?.description
 		.replace(/<[^>]*>?/gm, '')
@@ -37,7 +37,6 @@ export async function generateMetadata(
     metadataBase: new URL(`${process.env.NEXT_PUBLIC_HOST}/mindmap/${id}`),
   }
 }
- 
 
 export default async function CreateMindMapRoute({ params: { id }, parent }) {
   const session = await getServerSession();
