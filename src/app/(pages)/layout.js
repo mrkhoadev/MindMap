@@ -5,6 +5,7 @@ import { getServerSession } from "next-auth";
 
 export const metadata = {
   title: "Mindmap Page",
+  description: "Page",
 };
 
 export default async function layout({ children }) {
