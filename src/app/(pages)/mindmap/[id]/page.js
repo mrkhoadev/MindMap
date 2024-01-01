@@ -21,12 +21,14 @@ export async function generateMetadata(
 		.slice(0, 150)
 		.trim();
   return {
-    title: {
-      default: title || 'error',
-    },
+    title: 'test',
+    // {
+    //   default: title || 'error',
+    // },
     description: desc,
     openGraph: {
-      title: title || 'error',
+      // title: title || 'error',
+      title: 'test test',
       description: desc,
       images: [
         {
