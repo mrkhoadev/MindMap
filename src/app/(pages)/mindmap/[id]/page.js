@@ -1,5 +1,4 @@
 import CreateMindMap from "@/components/Pages/CreateMindMap/CreateMindMap";
-import { htmlScript } from "@/helpers/regex";
 import { getMindMapDetails } from "@/lib/CallApiServer";
 import { getServerSession } from "next-auth";
 import React from "react";
@@ -10,10 +9,10 @@ export async function generateMetadata(
   { params }
 )
 {
-  const id = params?.id
-  const session = await getServerSession();
-  const email = session?.user?.email;
-  const data = await getMindMapDetails(id, email);
+  const id = params?.id;
+  // const session = await getServerSession();
+  // const email = session?.user?.email;
+  const data = await getMindMapDetails(id);
   const title = data?.mindMapDetails?.name.slice(0, 60).trim();
 	const desc = data?.mindMapDetails?.description
 		.replace(/<[^>]*>?/gm, '')
@@ -21,14 +20,12 @@ export async function generateMetadata(
 		.slice(0, 150)
 		.trim();
   return {
-    title: 'test',
-    // {
-    //   default: title || 'error',
-    // },
+    title: {
+      default: title || 'error',
+    },
     description: desc,
     openGraph: {
-      // title: title || 'error',
-      title: 'test test',
+      title: title || 'error',
       description: desc,
       images: [
         {
