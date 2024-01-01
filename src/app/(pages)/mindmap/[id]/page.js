@@ -15,13 +15,15 @@ export async function generateMetadata(
   const email = session?.user?.email;
   const data = await getMindMapDetails(id, email);
   const title = data?.mindMapDetails?.name.slice(0, 60).trim();
-	const desc = htmlScript(data?.mindMapDetails?.description)
+	const desc = data?.mindMapDetails?.description
 		.replace(/<[^>]*>?/gm, '')
 		.replace(/\n/gm, ' ')
 		.slice(0, 150)
 		.trim();
   return {
-    title: title || 'error',
+    title: {
+      default: title || 'error',
+    },
     description: desc,
     openGraph: {
       title: title || 'error',
