@@ -2,6 +2,11 @@ import Link from "next/link";
 import React from "react";
 import RegisterForm from "../../../components/Auth/RegisterForm";
 
+export const metadata = {
+  title: "Đăng ký",
+  description: "Tạo tài khoản để có thể sử dụng chức năng",
+};
+
 export default function RegisterRoute() {
   return (
     <>

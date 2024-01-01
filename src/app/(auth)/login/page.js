@@ -2,6 +2,11 @@ import Link from "next/link";
 import React from "react";
 import LoginForm from "@/components/Auth/LoginForm";
 
+export const metadata = {
+  title: "Đăng nhập",
+  description: "Đăng nhập để có trải nghiệm tốt nhất",
+};
+
 export default function LoginRoute() {
   return (
     <>
