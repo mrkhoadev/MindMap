@@ -33,7 +33,7 @@ export async function generateMetadata(
         }
       ],
     },
-    metadataBase: new URL(`${process.env.NEXTAUTH_URL}/mindmap/${id}`),
+    metadataBase: new URL(`${process.env.NEXT_PUBLIC_HOST}/mindmap/${id}`),
   }
 }
  
