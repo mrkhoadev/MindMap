@@ -35,13 +35,13 @@ const getMindMapDetails = async (id, email) => {
         const data = await response.json();
         const details = [...data][0];
         revalidateTag(`mindmap`);
-        // if (email !== details?.userEmail && !details?.isAccessible)
-        // {
-        //   return {
-        //     status: 401,
-        //     mindMapDetails: null
-        //   }
-        // }
+        if (email !== details?.userEmail && !details?.isAccessible)
+        {
+          return {
+            status: 401,
+            mindMapDetails: null
+          }
+        }
         return {
           status: response.status,
           mindMapDetails: details || null,
