@@ -14,9 +14,13 @@ export default async function middleware(request) {
     }
   }
   if (pathname.startsWith(`/mindmap`)) {
+    if (pathname.split("/")[2]) {
+      return NextResponse.next();
+    }
     if (!jwt) {
       return NextResponse.redirect(new URL(`/login`, request.url));
     }
+    return NextResponse.next();
   }
 }
 export const config = {
