@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { getToken } from "next-auth/jwt";
+import { isNanoID } from "./helpers/regex";
 
 export default async function middleware(request) {
   const { pathname } = request.nextUrl;
@@ -12,12 +13,11 @@ export default async function middleware(request) {
     if (jwt) {
       return NextResponse.redirect(new URL(`/`, request.url));
     }
-  }
+  };
   if (pathname.startsWith(`/mindmap`)) {
-    if (pathname.split("/")[2]) {
+    if (pathname.split("/")[2] && isNanoID(pathname.split("/")[2])) {
       return NextResponse.next();
-    }
-    if (!jwt) {
+    } else if (!jwt) {
       return NextResponse.redirect(new URL(`/login`, request.url));
     }
     return NextResponse.next();

@@ -1,9 +1,8 @@
 "use client";
 import { signOut } from "next-auth/react";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import React from "react";
-import { useDispatch } from "react-redux";
 
 const headerCSS = {
   header: "",

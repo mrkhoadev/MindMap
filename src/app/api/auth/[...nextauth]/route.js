@@ -31,6 +31,12 @@ export const authOptions = {
     signIn: "/login",
   },
   callbacks: {
+    async jwt(data) {
+      if (data.account) {
+        data.token.provider = data.account.provider;
+      }
+      return data.token;
+    },
     async session(data) {
       return data.token;
     },
