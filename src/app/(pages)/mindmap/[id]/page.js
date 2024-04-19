@@ -41,7 +41,7 @@ export default async function CreateMindMapRoute({ params: { id }, parent }) {
   const session = await getServerSession();
   const email = session?.user?.email;
   const data = await getMindMapDetails(id, email);
-  
+  console.log(data);
   return (
     <main>
       <CreateMindMap email={email} data={data} />

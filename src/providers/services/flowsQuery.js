@@ -55,7 +55,7 @@ export const flows = createApi({
         invalidatesTags: [{ type: "mindmap", id: "LIST" }],
       }),
     getMindMapDetails: builder.query({
-      query: (mindMapId) => `/mindmap?mindMapId=${mindMapId}`,
+      query: (mindMapId) => `/mindmap?mindmapId=${mindMapId}`,
       providesTags: (result, error) => {
           if (result)
           {
