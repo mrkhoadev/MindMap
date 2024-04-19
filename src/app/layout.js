@@ -5,7 +5,6 @@ import Providers from "@/providers/Provider";
 import { getServerSession } from "next-auth";
 import imgHome from "@/assets/images/pages/home/so-do-tu-duy.webp"
 
-
 export const metadata = {
   title: "Mindmap Flow",
   description: "Mindmap Flow - Công cụ xây dựng sơ đồ tư duy mạnh mẽ",

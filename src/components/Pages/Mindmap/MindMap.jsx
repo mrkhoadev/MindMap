@@ -26,7 +26,8 @@ const tableClass = {
   col5: 'w-1/6 text-center px-2',
 }
 
-export default function MindMap({ session = '', data: { status = 'idle', mindMapData = null } }) {
+export default function MindMap({ session = '', data = {} }) {
+  const { status = 'idle', mindMapData = null } = data;
   const dispatch = useDispatch();
   const isSelected = useSelector((state) => state.flowsSlice.isSelected);
   const mindMapList = useSelector((state) => state.flowsSlice.mindMapList);
@@ -155,7 +156,7 @@ export default function MindMap({ session = '', data: { status = 'idle', mindMap
               className={`${tableClass.tbody}`}
             >
               {
-                mindMapList.length >= 1 ? 
+                mindMapList?.length >= 1 ? 
                 (mindMapList.map((element) => {
                   if (element) {
                     const {id, name, description, create_at, selected, mindMapId, isAccessible} = element;
